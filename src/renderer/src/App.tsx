@@ -1,8 +1,12 @@
+import { ContentPage } from './components/contentPage'
+import { SidePanel } from './components/sidePanel'
+
 function App(): React.JSX.Element {
   return (
-    <>
-      <h1 className="text-3xl text-purple-300">Hello</h1>
-    </>
+    <div className="flex gap-2 w-full h-screen p-2">
+      <SidePanel />
+      <ContentPage />
+    </div>
   )
 }
 

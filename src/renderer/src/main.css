@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
 body {
-  background-color: darkseagreen;
+  background-color: var(--color-background-dark-blue);
+  color: var(--color-text-orange);
+}
+
+:root {
+  --color-background-dark-blue: #211f30;
+  --color-background-asphalt: #32384d;
+  --color-border-asphalt: #2d3142;
+  --color-text-orange: #e29930;
+  --color-selection-blue: #217ca3;
 }
