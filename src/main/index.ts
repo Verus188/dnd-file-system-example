@@ -1,6 +1,7 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { promises as fs } from 'fs'
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -67,5 +68,77 @@ app.on('window-all-closed', () => {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+ipcMain.handle('select-folder', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openDirectory']
+  })
+
+  if (result.canceled) {
+    return null
+  }
+
+  return result.filePaths[0]
+})
+
+ipcMain.handle('select-file', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openFile']
+  })
+
+  if (result.canceled) {
+    return null
+  }
+
+  return result.filePaths[0]
+})
+
+const isFileExists = async (path: string): Promise<boolean> => {
+  try {
+    await fs.access(path)
+    return true
+  } catch {
+    return false
+  }
+}
+
+ipcMain.handle('isFolder', async (_, path: string): Promise<boolean> => {
+  try {
+    const stats = await fs.stat(path)
+    return stats.isDirectory()
+  } catch (error) {
+    console.error(`Error checking if ${path} is a folder:`, error)
+    return false
+  }
+})
+
+ipcMain.handle('safe-read-folder', async (_, path: string): Promise<string[]> => {
+  if (!(await isFileExists(path))) {
+    return []
+  }
+
+  try {
+    const files = await fs.readdir(path)
+    return files
+  } catch (error) {
+    console.error(`Error reading folder ${path}:`, error)
+    return []
+  }
+})
+
+ipcMain.handle('safe-read-file', async (_, path: string): Promise<string | null> => {
+  if (!(await isFileExists(path))) {
+    return null
+  }
+
+  try {
+    const fileContent = await fs.readFile(path, 'utf-8')
+    if (!fileContent) {
+      return null
+    }
+
+    return fileContent
+  } catch (error) {
+    console.error(`Error reading file ${path}:`, error)
+    return null
+  }
+})
