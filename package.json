@@ -22,19 +22,22 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
-    "@electron-toolkit/utils": "^4.0.0"
+    "@electron-toolkit/utils": "^4.0.0",
+    "@reatom/core": "^3.10.1",
+    "@reatom/npm-react": "^3.10.6",
+    "wouter": "3.7.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@electron-toolkit/eslint-config-ts": "^3.1.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@tailwindcss/vite": "^4.1.12",
-    "@types/node": "^22.17.2",
+    "@types/node": "^24.3.0",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^5.0.1",
     "electron": "^37.3.1",
-    "electron-builder": "^25.1.8",
+    "electron-builder": "^26.0.12",
     "electron-vite": "^4.0.0",
     "eslint": "^9.34.0",
     "eslint-plugin-react": "^7.37.5",

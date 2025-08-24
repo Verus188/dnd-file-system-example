@@ -7,7 +7,9 @@ body {
 
 :root {
   --color-background-dark-blue: #211f30;
+  --color-border-dark-blue: #1e1d2b;
   --color-background-asphalt: #32384d;
+  --color-background-hovered-asphalt: #373f57;
   --color-border-asphalt: #2d3142;
   --color-text-orange: #e29930;
   --color-selection-blue: #217ca3;
