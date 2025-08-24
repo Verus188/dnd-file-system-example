@@ -18,7 +18,7 @@ export const Content = reatomComponent(({ ctx }) => {
       <div className="flex w-full justify-end">
         <Link
           to={location === '/settings' ? prevRef.current : '/settings'}
-          className="px-2 py-1 border-4 border-[var(--color-border-asphalt)] rounded-lg bg-[var(--color-background-asphalt)] hover:bg-[var(--color-background-hovered-asphalt)]"
+          className="active:translate-y-0.5 px-2 py-1 border-4 border-[var(--color-border-asphalt)] rounded-lg bg-[var(--color-background-asphalt)] hover:bg-[var(--color-background-asphalt-hovered)]"
         >
           Settings
         </Link>
