@@ -15,3 +15,15 @@ body {
   --color-text-orange: #e29930;
   --color-selection-blue: #217ca3;
 }
+
+.customScrollbar::-webkit-scrollbar {
+  background-color: none;
+  width: 5px;
+}
+
+.customScrollbar::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  width: 4px;
+  background-color: var(--color-text-orange);
+  cursor: default;
+}
