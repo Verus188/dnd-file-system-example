@@ -16,13 +16,9 @@ type LibraryElementProps = {
 }
 
 export const LibraryElement: FC<LibraryElementProps> = ({ fileInfo }) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: fileInfo.path
   })
-
-  const dragStyle = {
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined
-  }
 
   const dragParams: DragParams = {
     setNodeRef,
@@ -33,9 +29,9 @@ export const LibraryElement: FC<LibraryElementProps> = ({ fileInfo }) => {
   return (
     <div className="flex flex-col w-[92%] select-none" title={fileInfo.path}>
       {fileInfo.type === 'file' ? (
-        <LibraryFile fileInfo={fileInfo} dragParams={dragParams} dragStyle={dragStyle} />
+        <LibraryFile fileInfo={fileInfo} dragParams={dragParams} />
       ) : (
-        <LibraryFolder fileInfo={fileInfo} dragParams={dragParams} dragStyle={dragStyle} />
+        <LibraryFolder fileInfo={fileInfo} dragParams={dragParams} />
       )}
     </div>
   )

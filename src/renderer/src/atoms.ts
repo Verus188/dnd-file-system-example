@@ -13,4 +13,4 @@ export const openedFolderAtom = atom<string | null>(null)
 
 export const openedFolderFilesAtom = atom<FileInfo | null>(null)
 
-export const idDraggingAtom = atom<boolean>(false)
+export const isDraggingAtom = atom<boolean>(false)
