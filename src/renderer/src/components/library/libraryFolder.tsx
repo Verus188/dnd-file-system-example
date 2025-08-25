@@ -1,19 +1,27 @@
 import { getFileName } from '@renderer/functions/getFileName'
 import { FileInfo } from '@renderer/types'
-import { FC, useState } from 'react'
-import { LibraryElement } from './libraryElement'
+import { CSSProperties, FC, useState } from 'react'
+import { DragParams, LibraryElement } from './libraryElement'
 import ArrowImage from '@assets/dropdownarrow.svg?react'
 
 type LibraryFolderProps = {
   fileInfo: FileInfo
+  dragParams: DragParams
+  dragStyle: CSSProperties
 }
 
-export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo }) => {
-  const [isOpen, setIsOpen] = useState(false)
+export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo, dragParams, dragStyle }) => {
+  const [isOpen, setIsOpen] = useState(true)
+
+  const { setNodeRef, attributes, listeners } = dragParams
 
   return (
-    <div>
+    <>
       <div
+        ref={setNodeRef}
+        style={dragStyle}
+        {...attributes}
+        {...listeners}
         onClick={() => setIsOpen(!isOpen)}
         className=" px-2 flex h-fit gap-2 items-center hover:bg-[var(--color-background-dark-blue-hovered)] rounded-lg"
       >
@@ -29,6 +37,6 @@ export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo }) => {
           return <LibraryElement fileInfo={child} key={child.path} />
         })}
       </div>
-    </div>
+    </>
   )
 }

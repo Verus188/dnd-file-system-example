@@ -12,3 +12,5 @@ export const getPrevRoute = action((ctx: Ctx) => {
 export const openedFolderAtom = atom<string | null>(null)
 
 export const openedFolderFilesAtom = atom<FileInfo | null>(null)
+
+export const idDraggingAtom = atom<boolean>(false)
