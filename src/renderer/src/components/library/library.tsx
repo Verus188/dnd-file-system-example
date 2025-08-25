@@ -1,16 +1,17 @@
 import { FC } from 'react'
 import { LibraryElement } from './libraryElement'
+import type { FileInfo } from '@renderer/types'
 
 type LibraryProps = {
-  links: string[]
+  fileInfo: FileInfo | null
 }
 
-export const Library: FC<LibraryProps> = ({ links }) => {
+export const Library: FC<LibraryProps> = ({ fileInfo }) => {
+  if (!fileInfo) return <div></div>
+
   return (
     <div className="pr-4 flex flex-col gap-2 overflow-y-scroll customScrollbar">
-      {links.map((link) => (
-        <LibraryElement link={link} key={link} />
-      ))}
+      <LibraryElement fileInfo={fileInfo} key={fileInfo.path} />
     </div>
   )
 }

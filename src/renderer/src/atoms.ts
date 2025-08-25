@@ -1,4 +1,5 @@
 import { action, atom, Ctx } from '@reatom/core'
+import type { FileInfo } from './types'
 
 export const prevRoute = atom<string | null>(null)
 
@@ -10,4 +11,4 @@ export const getPrevRoute = action((ctx: Ctx) => {
 // открытая папка в боковой панели
 export const openedFolderAtom = atom<string | null>(null)
 
-export const openedFolderLinksAtom = atom<string[]>([])
+export const openedFolderFilesAtom = atom<FileInfo | null>(null)

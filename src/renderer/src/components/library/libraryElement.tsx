@@ -1,13 +1,18 @@
 import { FC } from 'react'
+import type { FileInfo } from '@renderer/types'
+import { LibraryFile } from './libraryFile'
+import { LibraryFolder } from './libraryFolder'
 
 type LibraryElementProps = {
-  link: string
+  fileInfo: FileInfo
 }
 
-export const LibraryElement: FC<LibraryElementProps> = ({ link }) => {
-  return (
-    <div className="select-none cursor-pointer px-2 h-fit rounded-lg text-[var(--color-text-orange)] hover:bg-[var(--color-background-dark-blue-hovered)] flex border-4 border-[var(--color-border-dark-blue)] bg-[var(--color-background-dark-blue)]">
-      {link}
-    </div>
-  )
+export const LibraryElement: FC<LibraryElementProps> = ({ fileInfo }) => {
+  console.log(fileInfo)
+
+  if (fileInfo.type === 'file') {
+    return <LibraryFile fileInfo={fileInfo} />
+  } else {
+    return <LibraryFolder fileInfo={fileInfo} />
+  }
 }
