@@ -5,6 +5,10 @@ body {
   color: var(--color-text-orange);
 }
 
+::selection {
+  background-color: var(--color-selection-blue);
+}
+
 :root {
   --color-background-dark-blue: #211f30;
   --color-background-dark-blue-hovered: #27253b;

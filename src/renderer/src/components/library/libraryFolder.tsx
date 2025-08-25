@@ -24,7 +24,7 @@ export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo }) => {
         </div>
         {getFileName(fileInfo.path)}
       </div>
-      <div className={`${isOpen ? 'flex' : 'hidden'} flex-col items-end`}>
+      <div className={`${isOpen ? 'flex' : 'hidden'} flex-col items-end gap-1`}>
         {fileInfo.children?.map((child) => {
           return <LibraryElement fileInfo={child} key={child.path} />
         })}

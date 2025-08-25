@@ -22,7 +22,6 @@ export const SidePanel = reatomComponent(({ ctx }) => {
             if (!path) return
 
             const links = await getFolderTree(path)
-            // console.log(links)
 
             openedFolderFilesAtom(ctx, links)
           }}
