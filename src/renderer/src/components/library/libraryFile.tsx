@@ -1,6 +1,6 @@
 import { getFileName } from '@renderer/functions/getFileName'
 import { FileInfo } from '@renderer/types'
-import { CSSProperties, FC } from 'react'
+import { FC } from 'react'
 import { Link } from 'wouter'
 import { DragParams } from './libraryElement'
 

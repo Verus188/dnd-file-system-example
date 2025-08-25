@@ -10,7 +10,7 @@ type LibraryFolderProps = {
 }
 
 export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo, dragParams }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   const { setNodeRef, attributes, listeners } = dragParams
 
