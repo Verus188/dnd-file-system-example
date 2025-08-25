@@ -10,7 +10,7 @@ export const Library: FC<LibraryProps> = ({ fileInfo }) => {
   if (!fileInfo) return <div></div>
 
   return (
-    <div className="pr-4 flex flex-col gap-2 overflow-y-scroll customScrollbar">
+    <div className="pr-4 flex flex-col overflow-y-scroll customScrollbar">
       <LibraryElement fileInfo={fileInfo} key={fileInfo.path} />
     </div>
   )

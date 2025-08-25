@@ -8,11 +8,13 @@ type LibraryElementProps = {
 }
 
 export const LibraryElement: FC<LibraryElementProps> = ({ fileInfo }) => {
-  console.log(fileInfo)
-
-  if (fileInfo.type === 'file') {
-    return <LibraryFile fileInfo={fileInfo} />
-  } else {
-    return <LibraryFolder fileInfo={fileInfo} />
-  }
+  return (
+    <div className="flex flex-col w-[90%]">
+      {fileInfo.type === 'file' ? (
+        <LibraryFile fileInfo={fileInfo} />
+      ) : (
+        <LibraryFolder fileInfo={fileInfo} />
+      )}
+    </div>
+  )
 }

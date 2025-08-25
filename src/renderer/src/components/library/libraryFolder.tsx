@@ -1,19 +1,34 @@
 import { getFileName } from '@renderer/functions/getFileName'
 import { FileInfo } from '@renderer/types'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { LibraryElement } from './libraryElement'
+import ArrowImage from '@assets/dropdownarrow.svg?react'
 
 type LibraryFolderProps = {
   fileInfo: FileInfo
 }
 
 export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
-    <div className="border-3 border-blue-500">
-      {getFileName(fileInfo.path)}
-      {fileInfo.children?.map((child) => {
-        return <LibraryElement fileInfo={child} key={child.path} />
-      })}
+    <div>
+      <div
+        onClick={() => setIsOpen(!isOpen)}
+        className=" px-2 flex h-fit gap-2 items-center hover:bg-[var(--color-background-dark-blue-hovered)] rounded-lg"
+      >
+        <div>
+          <ArrowImage
+            className={`text-[var(--color-text-orange)] size-3 ${isOpen ? '-rotate-90' : '-rotate-180'}`}
+          />
+        </div>
+        {getFileName(fileInfo.path)}
+      </div>
+      <div className={`${isOpen ? 'block' : 'hidden'}`}>
+        {fileInfo.children?.map((child) => {
+          return <LibraryElement fileInfo={child} key={child.path} />
+        })}
+      </div>
     </div>
   )
 }
