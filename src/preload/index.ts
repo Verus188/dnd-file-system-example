@@ -8,7 +8,9 @@ const api = {
   selectFile: () => ipcRenderer.invoke('select-file'),
   readFile: (path: string) => ipcRenderer.invoke('safe-read-file', path),
   readFolder: (path: string) => ipcRenderer.invoke('safe-read-folder', path),
-  isFolder: (path: string) => ipcRenderer.invoke('isFolder', path)
+  isFolder: (path: string) => ipcRenderer.invoke('isFolder', path),
+  moveFile: (source: string, destination: string) =>
+    ipcRenderer.send('move-file', source, destination)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

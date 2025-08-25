@@ -9,6 +9,7 @@ declare global {
       readFile: (path: string) => Promise<string | null>
       readFolder: (path: string) => Promise<string[]>
       isFolder: (path: string) => Promise<boolean>
+      moveFile: (source: string, destination: string) => void
     }
   }
 }

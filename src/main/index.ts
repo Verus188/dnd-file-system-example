@@ -142,3 +142,11 @@ ipcMain.handle('safe-read-file', async (_, path: string): Promise<string | null>
     return null
   }
 })
+
+ipcMain.on('move-file', (_, path: string, newPath: string) => {
+  const fileName = path.split('/').pop()
+  const newFilePath = newPath + '/' + fileName
+  console.log(path, newFilePath)
+
+  fs.rename(path, newFilePath)
+})

@@ -2,6 +2,7 @@ import { getFileName } from '@renderer/functions/getFileName'
 import { FileInfo } from '@renderer/types'
 import { FC, useState } from 'react'
 import { DragParams, LibraryElement } from './libraryElement'
+import { useDroppable } from '@dnd-kit/core'
 import ArrowImage from '@assets/dropdownarrow.svg?react'
 
 type LibraryFolderProps = {
@@ -11,11 +12,18 @@ type LibraryFolderProps = {
 
 export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo, dragParams }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const { isOver, setNodeRef: dropRef } = useDroppable({
+    id: fileInfo.path
+  })
+
+  const dropStyle = {
+    backgroundColor: isOver ? 'var(--color-background-dark-blue-hovered)' : undefined
+  }
 
   const { setNodeRef, attributes, listeners } = dragParams
 
   return (
-    <>
+    <div ref={dropRef} style={dropStyle}>
       <div
         ref={setNodeRef}
         {...attributes}
@@ -35,6 +43,6 @@ export const LibraryFolder: FC<LibraryFolderProps> = ({ fileInfo, dragParams }) 
           return <LibraryElement fileInfo={child} key={child.path} />
         })}
       </div>
-    </>
+    </div>
   )
 }

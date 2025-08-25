@@ -15,11 +15,15 @@ type LibraryElementProps = {
   fileInfo: FileInfo
 }
 
+/**
+ * Компонент определяющий тип элемента библиотеки
+ */
 export const LibraryElement: FC<LibraryElementProps> = ({ fileInfo }) => {
   const { attributes, listeners, setNodeRef } = useDraggable({
     id: fileInfo.path
   })
 
+  // параметры для dnd
   const dragParams: DragParams = {
     setNodeRef,
     attributes,
