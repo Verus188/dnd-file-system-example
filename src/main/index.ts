@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
-import { join } from 'path'
+import { join, basename } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { promises as fs } from 'fs'
 import icon from '../../resources/icon.png?asset'
@@ -143,10 +143,38 @@ ipcMain.handle('safe-read-file', async (_, path: string): Promise<string | null>
   }
 })
 
-ipcMain.on('move-file', (_, path: string, newPath: string) => {
-  const fileName = path.split('/').pop()
-  const newFilePath = newPath + '/' + fileName
-  console.log(path, newFilePath)
+ipcMain.handle('move-file', async (event, path: string, newPath: string) => {
+  try {
+    const fileName = basename(path)
+    const newFilePath = join(newPath, fileName)
 
-  fs.rename(path, newFilePath)
+    if (await isFileExists(newFilePath)) {
+      // Запрос подтверждения замены у renderer через IPC
+      const requestId = `${Date.now()}_${Math.random().toString(36).slice(2)}`
+      event.sender.send('confirm-replace', {
+        requestId,
+        fileName,
+        sourcePath: path,
+        targetPath: newFilePath
+      })
+
+      const confirmed = await new Promise<boolean>((resolve) => {
+        const channel = `confirm-replace-response:${requestId}`
+        const handler = (_evt: Electron.IpcMainEvent, accepted: boolean) => {
+          resolve(accepted)
+        }
+        ipcMain.once(channel, handler)
+      })
+
+      if (!confirmed) {
+        return false
+      }
+    }
+
+    await fs.rename(path, newFilePath)
+    return true
+  } catch (error) {
+    console.error('Error moving file:', error)
+    return false
+  }
 })

@@ -20,14 +20,13 @@ export const Library: FC<LibraryProps> = reatomComponent(({ ctx, fileInfo }) => 
   }
 
   const handleDragEnd = async (event) => {
-    console.log(event)
-
     if (!event.over || event.over.id === event.active.id) return
 
-    window.api.moveFile(event.active.id, event.over.id)
-
-    const links = await getFolderTree(ctx.get(openedFolderAtom) || '')
-    openedFolderFilesAtom(ctx, links)
+    const moved = await window.api.moveFile(event.active.id, event.over.id)
+    if (moved) {
+      const links = await getFolderTree(ctx.get(openedFolderAtom) || '')
+      openedFolderFilesAtom(ctx, links)
+    }
     setActiveDragId(null)
   }
 
