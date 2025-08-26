@@ -7,6 +7,7 @@ import { getFileName } from '@renderer/functions/getFileName'
 import { openedFolderAtom, openedFolderFilesAtom } from '@renderer/atoms'
 import { reatomComponent } from '@reatom/npm-react'
 import { getFolderTree } from '@renderer/functions/getFolderTree'
+import { snapCenterToCursor } from '@dnd-kit/modifiers'
 
 type LibraryProps = {
   fileInfo: FileInfo | null
@@ -53,7 +54,7 @@ export const Library: FC<LibraryProps> = reatomComponent(({ ctx, fileInfo }) => 
       </div>
 
       {/* компонент отображающийся при перетаскивании */}
-      <DragOverlay>
+      <DragOverlay modifiers={[snapCenterToCursor]}>
         {activeDragId ? <LibraryDragOverlay title={getFileName(activeDragId)} /> : null}
       </DragOverlay>
     </DndContext>
