@@ -5,7 +5,7 @@ import { FilePage } from './pages/filePage'
 
 export const ContentPage = () => {
   return (
-    <div className="p-2 px-4 flex rounded-lg w-full h-full bg-[var(--color-background-asphalt)] border-[var(--color-border-asphalt)] border-4 overflow-y-scroll customScrollbar">
+    <div className=" overflow-x-hidden p-2 px-4 flex rounded-lg w-full h-full bg-[var(--color-background-asphalt)] border-[var(--color-border-asphalt)] border-4 overflow-y-scroll customScrollbar">
       <Switch>
         <Route path="/settings" component={() => <SettingsPage />} />
         <Route path="/file/:path" component={() => <FilePage />} />
