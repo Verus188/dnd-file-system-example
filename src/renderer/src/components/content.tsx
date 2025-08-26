@@ -8,8 +8,6 @@ export const Content = reatomComponent(({ ctx }) => {
   const [location, _] = useLocation()
   const prevRef = useRef<string>('')
 
-  console.log(location)
-
   useEffect(() => {
     prevRoute(ctx, prevRef.current || '')
     prevRef.current = location

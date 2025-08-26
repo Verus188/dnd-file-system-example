@@ -22,6 +22,10 @@ export const Library: FC<LibraryProps> = reatomComponent(({ ctx, fileInfo }) => 
   const handleDragEnd = async (event) => {
     if (!event.over || event.over.id === event.active.id) return
 
+    const activeFilePath = event.active.id.split('/').slice(0, -1).join('/')
+
+    if (activeFilePath === event.over.id) return
+
     const moved = await window.api.moveFile(event.active.id, event.over.id)
     if (moved) {
       const links = await getFolderTree(ctx.get(openedFolderAtom) || '')
