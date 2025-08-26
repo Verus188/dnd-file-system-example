@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useRef, useState } from 'react'
 import { LibraryElement } from './libraryElement'
 import type { FileInfo } from '@renderer/types'
 import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
@@ -15,23 +15,31 @@ type LibraryProps = {
 
 export const Library: FC<LibraryProps> = reatomComponent(({ ctx, fileInfo }) => {
   const [activeDragId, setActiveDragId] = useState<string | null>(null)
+  const isDropAnimationActive = useRef(true)
 
   const handleDragStart = (event) => {
+    isDropAnimationActive.current = true
     setActiveDragId(event.active.id)
   }
 
   const handleDragEnd = async (event) => {
+    // Сначала убираем оверлей, чтобы он не анимировался «назад»
+    setActiveDragId(null)
+
     if (!event.over || event.over.id === event.active.id) return
 
     const activeFilePath = event.active.id.split('/').slice(0, -1).join('/')
-
     if (activeFilePath === event.over.id) return
+    isDropAnimationActive.current = false
 
     const moved = await window.api.moveFile(event.active.id, event.over.id)
     if (moved) {
       const links = await getFolderTree(ctx.get(openedFolderAtom) || '')
       openedFolderFilesAtom(ctx, links)
     }
+  }
+
+  const handleDragCancel = () => {
     setActiveDragId(null)
   }
 
@@ -48,13 +56,21 @@ export const Library: FC<LibraryProps> = reatomComponent(({ ctx, fileInfo }) => 
   if (!fileInfo) return <div></div>
 
   return (
-    <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <DndContext
+      sensors={sensors}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onDragCancel={handleDragCancel}
+    >
       <div className="pr-4 flex flex-col overflow-y-scroll overflow-x-hidden customScrollbar">
         <LibraryElement fileInfo={fileInfo} key={fileInfo.path} />
       </div>
 
       {/* компонент отображающийся при перетаскивании */}
-      <DragOverlay modifiers={[snapCenterToCursor]}>
+      <DragOverlay
+        modifiers={[snapCenterToCursor]}
+        dropAnimation={isDropAnimationActive.current ? undefined : null}
+      >
         {activeDragId ? <LibraryDragOverlay title={getFileName(activeDragId)} /> : null}
       </DragOverlay>
     </DndContext>
